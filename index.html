@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mind Monarch | Premium Mental Health & Counseling</title>
+<meta name="description" content="Mind Monarch offers elite mental health counseling, therapy, and wellness services. Transform your mind, reclaim your life." />
+<meta name="keywords" content="mental health counseling, therapy, anxiety, depression, wellness, psychotherapy, Mind Monarch" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ── DESIGN TOKENS ────────────────────────────── */
+:root{
+  --deep:   #0d1117;
+  --ink:    #111827;
+  --forest: #1a3a2f;
+  --sage:   #2d6a4f;
+  --mint:   #52b788;
+  --foam:   #95d5b2;
+  --cream:  #f8f4ef;
+  --parch:  #ede8e1;
+  --gold:   #c9a84c;
+  --gold-l: #e8c97a;
+  --white:  #ffffff;
+  --text-dark: #1a1a2e;
+  --text-mid:  #4a5568;
+  --text-light:#718096;
+  --glass: rgba(255,255,255,0.06);
+  --glass-b: rgba(255,255,255,0.12);
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 32px;
+  --r-xl: 56px;
+  --shadow-sm: 0 2px 16px rgba(0,0,0,.12);
+  --shadow-md: 0 8px 48px rgba(0,0,0,.18);
+  --shadow-lg: 0 24px 80px rgba(0,0,0,.26);
+  --transition: all .4s cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+
+/* ── LOADER ────────────────────────────────────── */
+#loader{position:fixed;inset:0;background:var(--forest);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .6s ease,visibility .6s ease}
+#loader.hidden{opacity:0;visibility:hidden}
+.loader-crown{width:60px;height:60px;animation:floatCrown 1.6s ease-in-out infinite}
+.loader-crown svg{width:100%;height:100%}
+.loader-text{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);letter-spacing:.3em;font-weight:300;animation:pulse 1.6s ease-in-out infinite}
+@keyframes floatCrown{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── SCROLL PROGRESS ──────────────────────────── */
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--sage),var(--gold));z-index:9000;width:0%;transition:width .1s linear}
+
+/* ── NAV ───────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:0 5%;height:76px;display:flex;align-items:center;justify-content:space-between;transition:var(--transition)}
+nav.scrolled{background:rgba(10,20,16,.94);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06);box-shadow:0 4px 32px rgba(0,0,0,.3)}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.nav-logo-icon{width:38px;height:38px}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--white);letter-spacing:.06em}
+.nav-logo-text span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{font-size:.875rem;font-weight:500;color:rgba(255,255,255,.75);letter-spacing:.04em;transition:var(--transition);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--mint);transform:scaleX(0);transition:transform .3s ease;transform-origin:left}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{background:var(--gold);color:var(--ink)!important;padding:10px 24px;border-radius:var(--r-xl);font-weight:600!important;font-size:.8rem!important;letter-spacing:.08em!important;transition:var(--transition)!important}
+.nav-cta:hover{background:var(--gold-l);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.4)!important}
+.nav-cta::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:var(--transition)}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--forest);z-index:700;flex-direction:column;align-items:center;justify-content:center;gap:40px;opacity:0;transition:opacity .4s ease}
+.mobile-menu.open{opacity:1}
+.mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--white);letter-spacing:.1em;transition:var(--transition)}
+.mobile-menu a:hover{color:var(--gold)}
+.close-menu{position:absolute;top:28px;right:5%;font-size:2rem;color:var(--white);cursor:pointer;background:none;border:none;line-height:1}
+
+/* ── HERO ──────────────────────────────────────── */
+#home{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:var(--forest)}
+.hero-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 80% 60% at 70% 40%, rgba(45,106,79,.5) 0%, transparent 60%),
+  radial-gradient(ellipse 50% 70% at 20% 80%, rgba(26,58,47,.8) 0%, transparent 50%),
+  url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80') center/cover no-repeat;
+filter:brightness(.55)}
+.hero-noise{position:absolute;inset:0;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat}
+.hero-content{position:relative;z-index:2;max-width:740px;padding:140px 5% 100px}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);padding:8px 20px;border-radius:var(--r-xl);margin-bottom:32px;opacity:0;animation:fadeUp .8s .4s forwards}
+.hero-tag-dot{width:8px;height:8px;border-radius:50%;background:var(--mint);animation:blink 2s infinite}
+.hero-tag span{font-size:.78rem;letter-spacing:.12em;color:rgba(255,255,255,.8);font-weight:500;text-transform:uppercase}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,7vw,6.2rem);font-weight:300;line-height:1.05;color:var(--white);margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+.hero-h1 em{font-style:italic;color:var(--foam)}
+.hero-h1 strong{font-weight:600;display:block}
+.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.7);line-height:1.75;max-width:520px;margin-bottom:52px;font-weight:300;opacity:0;animation:fadeUp .8s .8s forwards}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s 1s forwards}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--ink);padding:16px 36px;border-radius:var(--r-xl);font-weight:600;font-size:.9rem;letter-spacing:.04em;transition:var(--transition);box-shadow:0 8px 32px rgba(201,168,76,.35)}
+.btn-primary:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 16px 48px rgba(201,168,76,.45)}
+.btn-outline{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--white);padding:15px 36px;border-radius:var(--r-xl);font-weight:500;font-size:.9rem;border:1px solid rgba(255,255,255,.35);transition:var(--transition);letter-spacing:.04em}
+.btn-outline:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.6);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:40px;left:5%;display:flex;align-items:center;gap:12px;z-index:2;opacity:0;animation:fadeIn 1s 1.4s forwards}
+.hero-scroll-line{width:50px;height:1px;background:rgba(255,255,255,.4)}
+.hero-scroll span{font-size:.72rem;letter-spacing:.2em;color:rgba(255,255,255,.5);text-transform:uppercase}
+.hero-stats{position:absolute;bottom:40px;right:5%;z-index:2;display:flex;gap:40px;opacity:0;animation:fadeIn 1s 1.6s forwards}
+.hero-stat{text-align:right}
+.hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;color:var(--white);line-height:1}
+.hero-stat-num span{color:var(--gold)}
+.hero-stat-label{font-size:.72rem;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-top:4px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ── SECTION SHARED ────────────────────────────── */
+section{padding:110px 5%}
+.section-label{display:inline-flex;align-items:center;gap:10px;margin-bottom:18px}
+.section-label-line{width:32px;height:1px;background:var(--sage)}
+.section-label span{font-size:.72rem;letter-spacing:.18em;color:var(--sage);text-transform:uppercase;font-weight:600}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.6rem);font-weight:400;line-height:1.15;color:var(--text-dark);margin-bottom:20px}
+.section-title em{color:var(--sage);font-style:italic}
+.section-subtitle{font-size:1rem;color:var(--text-mid);line-height:1.75;max-width:540px;font-weight:300}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .7s ease,transform .7s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .7s ease,transform .7s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+
+/* ── ABOUT STRIP ────────────────────────────────── */
+#about-home{background:var(--white);padding:80px 5%}
+.about-strip{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto}
+.about-img-wrap{position:relative}
+.about-img{width:100%;height:520px;object-fit:cover;border-radius:var(--r-lg);box-shadow:var(--shadow-lg)}
+.about-img-badge{position:absolute;bottom:-28px;right:-28px;background:var(--forest);color:var(--white);padding:28px 32px;border-radius:var(--r-md);text-align:center;box-shadow:var(--shadow-md)}
+.about-img-badge .num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:600;color:var(--gold);line-height:1}
+.about-img-badge .lbl{font-size:.75rem;letter-spacing:.1em;color:rgba(255,255,255,.6);text-transform:uppercase;margin-top:4px}
+.about-text .section-subtitle{max-width:100%}
+.about-pillars{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px}
+.pillar{padding:20px;border-radius:var(--r-sm);background:var(--cream);border-left:3px solid var(--mint)}
+.pillar h4{font-size:.875rem;font-weight:600;color:var(--text-dark);margin-bottom:6px;letter-spacing:.02em}
+.pillar p{font-size:.8rem;color:var(--text-mid);line-height:1.6}
+
+/* ── SERVICES ──────────────────────────────────── */
+#services{background:var(--cream)}
+.services-head{text-align:center;margin-bottom:60px}
+.services-head .section-label{justify-content:center}
+.services-head .section-subtitle{margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto}
+.service-card{background:var(--white);border-radius:var(--r-md);overflow:hidden;transition:var(--transition);box-shadow:var(--shadow-sm);position:relative;cursor:pointer}
+.service-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-md)}
+.service-card-img{height:220px;overflow:hidden}
+.service-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.service-card:hover .service-card-img img{transform:scale(1.06)}
+.service-card-body{padding:28px}
+.service-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--forest),var(--sage));border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:1.4rem}
+.service-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--text-dark);margin-bottom:10px}
+.service-card p{font-size:.85rem;color:var(--text-mid);line-height:1.7}
+.service-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:.8rem;font-weight:600;color:var(--sage);letter-spacing:.04em}
+.service-link svg{transition:transform .3s ease}
+.service-card:hover .service-link svg{transform:translateX(4px)}
+
+/* ── WHY US ─────────────────────────────────────── */
+#why{background:var(--forest);position:relative;overflow:hidden}
+#why::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(82,183,136,.15) 0%,transparent 70%)}
+.why-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.why-text .section-title{color:var(--white)}
+.why-text .section-subtitle{color:rgba(255,255,255,.6)}
+.why-list{margin-top:40px;display:flex;flex-direction:column;gap:20px}
+.why-item{display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:var(--r-sm);background:var(--glass);border:1px solid rgba(255,255,255,.07);transition:var(--transition)}
+.why-item:hover{background:var(--glass-b);border-color:rgba(255,255,255,.14)}
+.why-item-icon{width:44px;height:44px;min-width:44px;border-radius:var(--r-sm);background:linear-gradient(135deg,rgba(82,183,136,.3),rgba(45,106,79,.3));display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.why-item-text h4{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:4px}
+.why-item-text p{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6}
+.why-visual{position:relative}
+.why-img{width:100%;height:500px;object-fit:cover;border-radius:var(--r-lg);opacity:.7}
+.why-quote{position:absolute;bottom:32px;left:32px;right:32px;background:rgba(10,20,16,.85);backdrop-filter:blur(12px);border-radius:var(--r-md);padding:28px;border:1px solid rgba(255,255,255,.1)}
+.why-quote p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--white);line-height:1.55;margin-bottom:12px}
+.why-quote-author{font-size:.78rem;color:var(--gold);font-weight:600;letter-spacing:.08em}
+
+/* ── APPROACH ───────────────────────────────────── */
+#approach{background:var(--white)}
+.approach-inner{max-width:1200px;margin:0 auto}
+.approach-head{margin-bottom:60px}
+.approach-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.approach-steps::before{content:'';position:absolute;top:44px;left:12.5%;right:12.5%;height:1px;background:linear-gradient(90deg,transparent,var(--foam),transparent)}
+.step{text-align:center;padding:40px 24px;position:relative}
+.step-num{width:88px;height:88px;border-radius:50%;background:var(--cream);border:2px solid var(--foam);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--sage);position:relative;z-index:2;transition:var(--transition)}
+.step:hover .step-num{background:var(--forest);border-color:var(--forest);color:var(--white);transform:scale(1.08)}
+.step h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--text-dark);margin-bottom:10px}
+.step p{font-size:.82rem;color:var(--text-mid);line-height:1.65}
+
+/* ── PACKAGES ───────────────────────────────────── */
+#packages{background:var(--cream)}
+.packages-head{text-align:center;margin-bottom:60px}
+.packages-head .section-label{justify-content:center}
+.packages-head .section-subtitle{margin:0 auto}
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto}
+.pkg-card{background:var(--white);border-radius:var(--r-lg);padding:44px 36px;border:1px solid transparent;transition:var(--transition);position:relative;overflow:hidden}
+.pkg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--parch)}
+.pkg-card.featured{background:var(--forest);border-color:rgba(82,183,136,.2);transform:scale(1.04)}
+.pkg-card.featured::before{background:linear-gradient(90deg,var(--sage),var(--gold))}
+.pkg-card.featured .pkg-name{color:rgba(255,255,255,.6)}
+.pkg-card.featured .pkg-price{color:var(--white)}
+.pkg-card.featured .pkg-desc{color:rgba(255,255,255,.55)}
+.pkg-card.featured .pkg-feature{color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.1)}
+.pkg-card.featured .pkg-feature .check{color:var(--mint)}
+.pkg-badge{position:absolute;top:20px;right:20px;background:var(--gold);color:var(--ink);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:var(--r-xl)}
+.pkg-name{font-size:.78rem;font-weight:600;letter-spacing:.15em;color:var(--text-light);text-transform:uppercase;margin-bottom:12px}
+.pkg-price{font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:400;color:var(--text-dark);line-height:1}
+.pkg-price sub{font-size:1rem;vertical-align:super;margin-right:4px}
+.pkg-price span{font-size:1rem;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--text-light)}
+.pkg-desc{font-size:.84rem;color:var(--text-mid);margin:16px 0 28px;line-height:1.6}
+.pkg-features{border-top:1px solid var(--parch);padding-top:28px;margin-bottom:32px;display:flex;flex-direction:column;gap:12px}
+.pkg-feature{display:flex;align-items:center;gap:10px;font-size:.84rem;color:var(--text-mid)}
+.check{color:var(--sage);font-size:1rem}
+.pkg-cta{width:100%;padding:14px;border-radius:var(--r-xl);font-weight:600;font-size:.875rem;cursor:pointer;letter-spacing:.04em;transition:var(--transition);border:none}
+.pkg-card:not(.featured) .pkg-cta{background:var(--cream);color:var(--text-dark);border:1px solid var(--parch)}
+.pkg-card:not(.featured) .pkg-cta:hover{background:var(--forest);color:var(--white)}
+.pkg-card.featured .pkg-cta{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--ink)}
+.pkg-card.featured .pkg-cta:hover{box-shadow:0 8px 32px rgba(201,168,76,.45);transform:translateY(-2px)}
+
+/* ── TESTIMONIALS ───────────────────────────────── */
+#testimonials{background:var(--white);overflow:hidden}
+.testimonials-head{text-align:center;margin-bottom:60px}
+.testimonials-head .section-label{justify-content:center}
+.testimonials-track{display:flex;gap:28px;animation:scrollLeft 40s linear infinite}
+.testimonials-track:hover{animation-play-state:paused}
+.testi-card{min-width:380px;background:var(--cream);border-radius:var(--r-md);padding:36px;border:1px solid var(--parch);position:relative;flex-shrink:0}
+.testi-quote{font-size:3rem;line-height:1;color:var(--foam);font-family:'Cormorant Garamond',serif;margin-bottom:16px}
+.testi-text{font-size:.9rem;color:var(--text-mid);line-height:1.75;font-style:italic;margin-bottom:24px}
+.testi-rating{display:flex;gap:4px;margin-bottom:16px}
+.star{color:var(--gold);font-size:.9rem}
+.testi-author{display:flex;align-items:center;gap:14px}
+.testi-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--foam)}
+.testi-name{font-weight:600;font-size:.875rem;color:var(--text-dark)}
+.testi-role{font-size:.76rem;color:var(--text-light);margin-top:2px}
+@keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── FAQ ────────────────────────────────────────── */
+#faq{background:var(--cream)}
+.faq-inner{max-width:800px;margin:0 auto}
+.faq-head{text-align:center;margin-bottom:52px}
+.faq-head .section-label{justify-content:center}
+.faq-item{background:var(--white);border-radius:var(--r-sm);margin-bottom:12px;overflow:hidden;border:1px solid var(--parch);transition:var(--transition)}
+.faq-item.open{border-color:var(--foam)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:22px 28px;cursor:pointer;gap:16px}
+.faq-q span{font-size:.9rem;font-weight:600;color:var(--text-dark)}
+.faq-icon{width:28px;height:28px;min-width:28px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.faq-item.open .faq-icon{background:var(--forest);transform:rotate(45deg)}
+.faq-icon svg{width:14px;height:14px;stroke:var(--sage);transition:stroke .3s}
+.faq-item.open .faq-icon svg{stroke:var(--white)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+.faq-item.open .faq-a{max-height:200px}
+.faq-a p{padding:0 28px 22px;font-size:.875rem;color:var(--text-mid);line-height:1.75}
+
+/* ── CTA BAND ────────────────────────────────────── */
+#cta-band{background:linear-gradient(135deg,var(--forest) 0%,var(--sage) 100%);text-align:center;padding:100px 5%}
+.cta-band-inner{max-width:700px;margin:0 auto}
+.cta-band-label{font-size:.75rem;letter-spacing:.18em;color:var(--foam);text-transform:uppercase;font-weight:600;margin-bottom:16px}
+.cta-band-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:20px}
+.cta-band-title strong{font-weight:600;display:block}
+.cta-band-sub{font-size:1rem;color:rgba(255,255,255,.65);margin-bottom:44px;font-weight:300;line-height:1.7}
+.cta-band-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+/* ── CONTACT ─────────────────────────────────────── */
+#contact{background:var(--white)}
+.contact-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
+.contact-info .section-subtitle{max-width:100%;margin-bottom:40px}
+.contact-details{display:flex;flex-direction:column;gap:20px;margin-bottom:40px}
+.contact-detail{display:flex;align-items:center;gap:16px}
+.contact-detail-icon{width:48px;height:48px;border-radius:var(--r-sm);background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.contact-detail-text label{font-size:.72rem;letter-spacing:.12em;color:var(--text-light);text-transform:uppercase;font-weight:600;display:block;margin-bottom:4px}
+.contact-detail-text a,.contact-detail-text span{font-size:.9rem;color:var(--text-dark);font-weight:500}
+.contact-socials{display:flex;gap:12px}
+.social-btn{width:44px;height:44px;border-radius:var(--r-sm);background:var(--cream);display:flex;align-items:center;justify-content:center;transition:var(--transition);font-size:1rem}
+.social-btn:hover{background:var(--forest);color:var(--white);transform:translateY(-2px)}
+.contact-form-wrap{background:var(--cream);border-radius:var(--r-lg);padding:52px;border:1px solid var(--parch)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.78rem;font-weight:600;letter-spacing:.06em;color:var(--text-dark);margin-bottom:8px;text-transform:uppercase}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:14px 18px;background:var(--white);border:1px solid var(--parch);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text-dark);outline:none;transition:border-color .3s ease}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--sage)}
+.form-group textarea{resize:vertical;min-height:130px;line-height:1.6}
+.form-group select{cursor:pointer}
+.form-submit{width:100%;padding:16px;background:var(--forest);color:var(--white);border:none;border-radius:var(--r-xl);font-family:'DM Sans',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer;letter-spacing:.04em;transition:var(--transition)}
+.form-submit:hover{background:var(--sage);transform:translateY(-2px);box-shadow:0 12px 36px rgba(26,58,47,.3)}
+.form-success{display:none;text-align:center;padding:40px 0}
+.form-success .checkmark{width:60px;height:60px;background:var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.6rem}
+.form-success h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--text-dark);margin-bottom:8px}
+.form-success p{color:var(--text-mid);font-size:.9rem}
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:72px 5% 36px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:64px}
+.footer-brand .footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.footer-logo-text{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white)}
+.footer-logo-text span{color:var(--gold)}
+.footer-brand p{font-size:.84rem;line-height:1.75;max-width:280px;margin-bottom:28px}
+.footer-col h4{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--white);font-weight:600;margin-bottom:20px}
+.footer-links li{margin-bottom:12px}
+.footer-links a{font-size:.84rem;color:rgba(255,255,255,.5);transition:color .3s ease}
+.footer-links a:hover{color:var(--mint)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-copy{font-size:.78rem;color:rgba(255,255,255,.35)}
+.footer-copy span{color:var(--gold)}
+.footer-bottom-links{display:flex;gap:24px}
+.footer-bottom-links a{font-size:.78rem;color:rgba(255,255,255,.35);transition:color .3s}
+.footer-bottom-links a:hover{color:rgba(255,255,255,.7)}
+
+/* ── BACK TO TOP ────────────────────────────────── */
+#back-top{position:fixed;bottom:32px;right:32px;width:48px;height:48px;border-radius:50%;background:var(--sage);color:var(--white);display:flex;align-items:center;justify-content:center;z-index:600;cursor:pointer;opacity:0;pointer-events:none;transition:var(--transition);box-shadow:0 4px 20px rgba(45,106,79,.4);border:none;font-size:1.1rem}
+#back-top.visible{opacity:1;pointer-events:auto}
+#back-top:hover{background:var(--forest);transform:translateY(-3px)}
+
+/* ── FLOATING CONTACT ────────────────────────────── */
+.float-contact{position:fixed;bottom:32px;left:32px;z-index:600;display:flex;flex-direction:column;gap:10px}
+.float-btn{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer;transition:var(--transition);box-shadow:var(--shadow-md);text-decoration:none;border:none}
+.float-wa{background:#25d366;color:var(--white)}
+.float-wa:hover{transform:scale(1.1);box-shadow:0 8px 28px rgba(37,211,102,.4)}
+.float-mail{background:var(--gold);color:var(--ink)}
+.float-mail:hover{transform:scale(1.1);box-shadow:0 8px 28px rgba(201,168,76,.4)}
+
+/* ── RESPONSIVE ──────────────────────────────────── */
+@media(max-width:1024px){
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .packages-grid{grid-template-columns:1fr;max-width:500px}
+  .pkg-card.featured{transform:none}
+  .approach-steps{grid-template-columns:repeat(2,1fr)}
+  .approach-steps::before{display:none}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .about-strip,.why-inner,.contact-inner{grid-template-columns:1fr;gap:40px}
+  .about-img-badge{bottom:-20px;right:-8px}
+}
+@media(max-width:768px){
+  section{padding:72px 5%}
+  .services-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{display:flex}
+  .hero-stats{display:none}
+  .form-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .approach-steps{grid-template-columns:1fr 1fr}
+  .why-visual{display:none}
+  .contact-form-wrap{padding:32px 24px}
+}
+@media(max-width:480px){
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  .btn-primary,.btn-outline{width:100%;justify-content:center}
+  .approach-steps{grid-template-columns:1fr}
+  .cta-band-actions{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-crown">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 8L36 22L52 18L44 32L52 46L36 40L30 54L24 40L8 46L16 32L8 18L24 22Z" fill="#c9a84c" opacity=".9"/>
+      <circle cx="30" cy="30" r="8" fill="#1a3a2f"/>
+      <circle cx="30" cy="30" r="4" fill="#c9a84c"/>
+    </svg>
+  </div>
+  <div class="loader-text">MIND MONARCH</div>
+</div>
+
+<!-- SCROLL PROGRESS -->
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <svg class="nav-logo-icon" viewBox="0 0 38 38" fill="none">
+      <path d="M19 4L23.5 14L34 11L28 21L34 31L23.5 27L19 37L14.5 27L4 31L10 21L4 11L14.5 14Z" fill="#c9a84c" opacity=".85"/>
+      <circle cx="19" cy="21" r="5" fill="#1a3a2f"/>
+      <circle cx="19" cy="21" r="2.5" fill="#c9a84c"/>
+    </svg>
+    <span class="nav-logo-text">Mind <span>Monarch</span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#about-home">About</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Book Session</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="close-menu" id="close-menu">×</button>
+  <a href="#home" class="mm-link">Home</a>
+  <a href="#services" class="mm-link">Services</a>
+  <a href="#packages" class="mm-link">Packages</a>
+  <a href="#about-home" class="mm-link">About</a>
+  <a href="#faq" class="mm-link">FAQ</a>
+  <a href="#contact" class="mm-link">Book Session</a>
+</div>
+
+<!-- ██ HERO ██ -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      <span>Accepting New Clients</span>
+    </div>
+    <h1 class="hero-h1">
+      <em>Reclaim</em> your mind.<br>
+      <strong>Rule your life.</strong>
+    </h1>
+    <p class="hero-sub">Premium mental health counseling crafted for those who refuse to settle — confidential, evidence-based, and deeply personal care that meets you where you are.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Book a Free Consultation
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#services" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll to explore</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num"><span id="c1">0</span>+</div>
+      <div class="hero-stat-label">Clients Helped</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num"><span id="c2">0</span>%</div>
+      <div class="hero-stat-label">Satisfaction Rate</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num"><span id="c3">0</span>+</div>
+      <div class="hero-stat-label">Years Experience</div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ ABOUT STRIP ██ -->
+<section id="about-home">
+  <div class="about-strip">
+    <div class="about-img-wrap reveal-left">
+      <img class="about-img" src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80" alt="Therapist in a calming session" loading="lazy" />
+      <div class="about-img-badge">
+        <div class="num">12</div>
+        <div class="lbl">Years of Excellence</div>
+      </div>
+    </div>
+    <div class="about-text reveal-right">
+      <div class="section-label"><span class="section-label-line"></span><span>Our Philosophy</span></div>
+      <h2 class="section-title">Mental wellness is not a luxury — it's your <em>birthright</em></h2>
+      <p class="section-subtitle">At Mind Monarch, we believe every person carries the capacity for profound healing. Our licensed therapists combine cutting-edge clinical methods with compassionate, human-centered care — creating a space where transformation truly begins.</p>
+      <div class="about-pillars">
+        <div class="pillar"><h4>Confidential</h4><p>Your privacy is sacred. Every session is strictly protected under HIPAA standards.</p></div>
+        <div class="pillar"><h4>Evidence-Based</h4><p>We use proven methods — CBT, DBT, EMDR — tailored to your unique needs.</p></div>
+        <div class="pillar"><h4>Flexible Access</h4><p>In-person and virtual sessions available. You choose where healing happens.</p></div>
+        <div class="pillar"><h4>Holistic Care</h4><p>Mind, body, and spirit. We treat the whole person, not just symptoms.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ SERVICES ██ -->
+<section id="services">
+  <div class="services-head reveal">
+    <div class="section-label"><span class="section-label-line"></span><span>What We Offer</span></div>
+    <h2 class="section-title">Comprehensive care for every <em>chapter</em></h2>
+    <p class="section-subtitle">Whether you're navigating a crisis or seeking personal growth, our services are designed to meet you exactly where you are.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-card-img">
+        <img src="https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?w=600&q=80" alt="Individual Therapy" loading="lazy" />
+      </div>
+      <div class="service-card-body">
+        <div class="service-icon">🧠</div>
+        <h3>Individual Therapy</h3>
+        <p>One-on-one sessions with a licensed therapist focused on anxiety, depression, trauma, and personal growth. A private space to explore your inner world.</p>
+        <a href="#contact" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.1s">
+      <div class="service-card-img">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" alt="Couples Counseling" loading="lazy" />
+      </div>
+      <div class="service-card-body">
+        <div class="service-icon">💞</div>
+        <h3>Couples Counseling</h3>
+        <p>Strengthen communication, resolve conflict, and rediscover connection. Our couples therapy helps partners build lasting, meaningful bonds.</p>
+        <a href="#contact" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.2s">
+      <div class="service-card-img">
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&q=80" alt="Family Therapy" loading="lazy" />
+      </div>
+      <div class="service-card-body">
+        <div class="service-icon">🏡</div>
+        <h3>Family Therapy</h3>
+        <p>Heal relational wounds and improve family dynamics. We guide families through conflict, grief, transitions, and healing with compassion.</p>
+        <a href="#contact" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.05s">
+      <div class="service-card-img">
+        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80" alt="Anxiety & Stress Management" loading="lazy" />
+      </div>
+      <div class="service-card-body">
+        <div class="service-icon">🌿</div>
+        <h3>Anxiety & Stress</h3>
+        <p>Practical, evidence-based tools to manage anxiety, panic, and chronic stress. Learn to regulate your nervous system and reclaim calm.</p>
+        <a href="#contact" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.15s">
+      <div class="service-card-img">
+        <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=80" alt="Trauma & PTSD" loading="lazy" />
+      </div>
+      <div class="service-card-body">
+        <div class="service-icon">🕊️</div>
+        <h3>Trauma & PTSD</h3>
+        <p>Specialized EMDR and trauma-focused CBT therapy to process difficult experiences and move forward with safety, courage, and clarity.</p>
+        <a href="#contact" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:.25s">
+      <div class="service-card-img">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80" alt="Mindfulness & Wellness" loading="lazy" />
+      </div>
+      <div class="service-card-body">
+        <div class="service-icon">🧘</div>
+        <h3>Mindfulness & Wellness</h3>
+        <p>Integrate mindfulness, meditation, and somatic practices into your healing journey. Cultivate inner peace that lasts well beyond the session.</p>
+        <a href="#contact" class="service-link">Learn More <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ WHY US ██ -->
+<section id="why">
+  <div class="why-inner">
+    <div class="why-text reveal-left">
+      <div class="section-label"><span class="section-label-line" style="background:var(--mint)"></span><span style="color:var(--mint)">Why Mind Monarch</span></div>
+      <h2 class="section-title">A sanctuary built on <em>trust</em></h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,.6)">We're not just another therapy practice. Every detail — from how we answer your first call to your final session — is designed with your dignity and growth in mind.</p>
+      <div class="why-list">
+        <div class="why-item reveal" style="transition-delay:.1s">
+          <div class="why-item-icon">🎓</div>
+          <div class="why-item-text"><h4>Licensed & Credentialed</h4><p>All therapists hold advanced degrees and maintain active licensure with ongoing training.</p></div>
+        </div>
+        <div class="why-item reveal" style="transition-delay:.2s">
+          <div class="why-item-icon">🔒</div>
+          <div class="why-item-text"><h4>Absolute Confidentiality</h4><p>Your sessions are fully private. We never share your information without explicit consent.</p></div>
+        </div>
+        <div class="why-item reveal" style="transition-delay:.3s">
+          <div class="why-item-icon">⚡</div>
+          <div class="why-item-text"><h4>Same-Week Appointments</h4><p>We prioritize access. New clients are seen within 5 business days, often sooner.</p></div>
+        </div>
+        <div class="why-item reveal" style="transition-delay:.4s">
+          <div class="why-item-icon">🌐</div>
+          <div class="why-item-text"><h4>In-Person & Virtual</h4><p>Flexible sessions in our serene office or from the comfort of your own space.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal-right">
+      <img class="why-img" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" alt="Calm therapy room" loading="lazy" />
+      <div class="why-quote">
+        <p>"After just three months, I finally understood why I kept repeating the same patterns. Mind Monarch gave me the clarity I'd been searching for my entire life."</p>
+        <div class="why-quote-author">— Ayesha K., Individual Client</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ APPROACH ██ -->
+<section id="approach">
+  <div class="approach-inner">
+    <div class="approach-head reveal">
+      <div class="section-label"><span class="section-label-line"></span><span>How It Works</span></div>
+      <h2 class="section-title">Your healing journey in <em>four steps</em></h2>
+    </div>
+    <div class="approach-steps">
+      <div class="step reveal"><div class="step-num">01</div><h3>Free Consultation</h3><p>A 20-minute call to understand your needs, answer questions, and match you with the right therapist.</p></div>
+      <div class="step reveal" style="transition-delay:.15s"><div class="step-num">02</div><h3>Personalized Plan</h3><p>Your therapist creates a tailored treatment plan using evidence-based modalities aligned to your goals.</p></div>
+      <div class="step reveal" style="transition-delay:.3s"><div class="step-num">03</div><h3>Regular Sessions</h3><p>Weekly or bi-weekly sessions — in person or virtual — to work through your journey at your own pace.</p></div>
+      <div class="step reveal" style="transition-delay:.45s"><div class="step-num">04</div><h3>Lasting Growth</h3><p>Tools, insights, and skills you'll carry for life. We measure progress and celebrate every milestone.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ PACKAGES ██ -->
+<section id="packages">
+  <div class="packages-head reveal">
+    <div class="section-label"><span class="section-label-line"></span><span>Investment in You</span></div>
+    <h2 class="section-title">Transparent, flexible <em>pricing</em></h2>
+    <p class="section-subtitle">All packages include a free 20-minute consultation. Sliding scale available for those who qualify.</p>
+  </div>
+  <div class="packages-grid">
+    <div class="pkg-card reveal">
+      <div class="pkg-name">Foundations</div>
+      <div class="pkg-price"><sub>$</sub>95<span>/ session</span></div>
+      <p class="pkg-desc">A gentle entry point into therapy. Ideal for those beginning their mental wellness journey.</p>
+      <div class="pkg-features">
+        <div class="pkg-feature"><span class="check">✓</span> 50-minute individual session</div>
+        <div class="pkg-feature"><span class="check">✓</span> Licensed therapist</div>
+        <div class="pkg-feature"><span class="check">✓</span> Virtual or in-person</div>
+        <div class="pkg-feature"><span class="check">✓</span> Intake assessment included</div>
+        <div class="pkg-feature" style="opacity:.35">✗ Between-session check-ins</div>
+        <div class="pkg-feature" style="opacity:.35">✗ Priority scheduling</div>
+      </div>
+      <button class="pkg-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+    </div>
+    <div class="pkg-card featured reveal" style="transition-delay:.15s">
+      <div class="pkg-badge">Most Popular</div>
+      <div class="pkg-name">Monarch Care</div>
+      <div class="pkg-price"><sub>$</sub>245<span>/ month</span></div>
+      <p class="pkg-desc">Our flagship plan — two sessions per month plus ongoing support for sustained transformation.</p>
+      <div class="pkg-features">
+        <div class="pkg-feature"><span class="check">✓</span> 2 × 50-minute sessions/month</div>
+        <div class="pkg-feature"><span class="check">✓</span> Between-session messaging</div>
+        <div class="pkg-feature"><span class="check">✓</span> Priority scheduling</div>
+        <div class="pkg-feature"><span class="check">✓</span> Progress tracking dashboard</div>
+        <div class="pkg-feature"><span class="check">✓</span> Resource library access</div>
+        <div class="pkg-feature"><span class="check">✓</span> Monthly progress review</div>
+      </div>
+      <button class="pkg-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Begin Transformation</button>
+    </div>
+    <div class="pkg-card reveal" style="transition-delay:.3s">
+      <div class="pkg-name">Elite Wellness</div>
+      <div class="pkg-price"><sub>$</sub>420<span>/ month</span></div>
+      <p class="pkg-desc">Comprehensive, concierge-level mental health care for executives, high-performers, and those seeking deep transformation.</p>
+      <div class="pkg-features">
+        <div class="pkg-feature"><span class="check">✓</span> 4 × 60-minute sessions/month</div>
+        <div class="pkg-feature"><span class="check">✓</span> Unlimited messaging support</div>
+        <div class="pkg-feature"><span class="check">✓</span> Same-day crisis support</div>
+        <div class="pkg-feature"><span class="check">✓</span> Personalized wellness plan</div>
+        <div class="pkg-feature"><span class="check">✓</span> Couples session included</div>
+        <div class="pkg-feature"><span class="check">✓</span> Dedicated care coordinator</div>
+      </div>
+      <button class="pkg-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Go Elite</button>
+    </div>
+  </div>
+</section>
+
+<!-- ██ TESTIMONIALS ██ -->
+<section id="testimonials" style="padding-bottom:0">
+  <div class="testimonials-head reveal">
+    <div class="section-label"><span class="section-label-line"></span><span>Client Stories</span></div>
+    <h2 class="section-title">Real people. Real <em>transformation</em>.</h2>
+  </div>
+  <div style="overflow:hidden;margin-top:48px;padding-bottom:110px">
+    <div class="testimonials-track" id="testi-track">
+      <!-- 8 cards, duplicated via JS -->
+      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testi-text">Mind Monarch completely changed how I relate to my anxiety. For the first time in years, I feel like I'm in the driver's seat of my own life.</p><div class="testi-author"><img class="testi-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M." /><div><div class="testi-name">Sarah M.</div><div class="testi-role">Anxiety & Stress Client</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testi-text">My therapist helped me understand my trauma without re-traumatizing me. The EMDR sessions were life-changing. I'm finally free.</p><div class="testi-author"><img class="testi-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James T." /><div><div class="testi-name">James T.</div><div class="testi-role">Trauma Recovery Client</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testi-text">My husband and I were on the brink of separation. After six sessions with our couples counselor, we rediscovered why we fell in love.</p><div class="testi-author"><img class="testi-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya R." /><div><div class="testi-name">Priya R.</div><div class="testi-role">Couples Therapy Client</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testi-text">As a CEO, I was skeptical about therapy. The Elite Wellness program exceeded every expectation — it's the best investment I've ever made in myself.</p><div class="testi-author"><img class="testi-avatar" src="https://randomuser.me/api/portraits/men/75.jpg" alt="David K." /><div><div class="testi-name">David K.</div><div class="testi-role">Executive Wellness Client</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testi-text">The mindfulness tools I learned here have become part of my daily routine. My sleep, my relationships, my work — everything improved.</p><div class="testi-author"><img class="testi-avatar" src="https://randomuser.me/api/portraits/women/55.jpg" alt="Layla N." /><div><div class="testi-name">Layla N.</div><div class="testi-role">Mindfulness Program</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testi-text">I was nervous about virtual therapy, but the experience felt just as connected and impactful as in-person. Incredibly professional and warm.</p><div class="testi-author"><img class="testi-avatar" src="https://randomuser.me/api/portraits/men/22.jpg" alt="Omar S." /><div><div class="testi-name">Omar S.</div><div class="testi-role">Virtual Therapy Client</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ FAQ ██ -->
+<section id="faq">
+  <div class="faq-inner">
+    <div class="faq-head reveal">
+      <div class="section-label"><span class="section-label-line"></span><span>Questions Answered</span></div>
+      <h2 class="section-title">Frequently asked <em>questions</em></h2>
+    </div>
+    <div id="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><span>How do I know if therapy is right for me?</span><div class="faq-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><p>Therapy benefits anyone seeking personal growth, coping strategies, or support. You don't need to be in crisis to benefit. If you're curious about therapy, that curiosity alone is enough to start.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Is everything I share kept confidential?</span><div class="faq-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><p>Absolutely. Everything shared in sessions is strictly confidential and protected by HIPAA regulations. The only exceptions involve imminent safety concerns, which your therapist will clearly explain at the start.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>How long does therapy typically take?</span><div class="faq-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><p>It varies by individual and goals. Some clients see meaningful change in 8–12 sessions; others prefer ongoing support for deeper work. Your therapist will regularly review your progress and adjust accordingly.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Do you accept insurance?</span><div class="faq-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><p>We are an out-of-network provider. Many clients receive partial reimbursement through their insurance's out-of-network benefits. We provide detailed superbills to submit to your insurer. A sliding scale is also available.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>What is the difference between in-person and virtual therapy?</span><div class="faq-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><p>Research shows virtual therapy is just as effective as in-person for most concerns. Virtual sessions offer flexibility and accessibility. In-person sessions provide a dedicated therapeutic environment. Both options use the same clinical approach.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Can I switch therapists if we're not the right fit?</span><div class="faq-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><p>Absolutely. The therapeutic relationship is crucial to success. If you feel a different therapist might serve you better, we'll arrange a smooth transition at no additional cost. Your wellbeing always comes first.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ CTA BAND ██ -->
+<section id="cta-band">
+  <div class="cta-band-inner reveal">
+    <div class="cta-band-label">Begin Today</div>
+    <h2 class="cta-band-title">You deserve a mind that feels <strong>at peace.</strong></h2>
+    <p class="cta-band-sub">Take the first step. Our free 20-minute consultation is no-pressure, completely confidential, and could be the most important conversation of your year.</p>
+    <div class="cta-band-actions">
+      <a href="#contact" class="btn-primary">Book Free Consultation</a>
+      <a href="mailto:contactglanders@gmail.com" class="btn-outline">Email Us Directly</a>
+    </div>
+  </div>
+</section>
+
+<!-- ██ CONTACT ██ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal-left">
+      <div class="section-label"><span class="section-label-line"></span><span>Reach Out</span></div>
+      <h2 class="section-title">Let's start your <em>journey</em></h2>
+      <p class="section-subtitle">We respond to all inquiries within one business day. Your first consultation is completely free and obligation-free.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📧</div>
+          <div class="contact-detail-text"><label>Email</label><a href="mailto:contactglanders@gmail.com">contactglanders@gmail.com</a></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📞</div>
+          <div class="contact-detail-text"><label>Phone</label><span>+1 (800) MONARCH</span></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🕐</div>
+          <div class="contact-detail-text"><label>Hours</label><span>Mon–Fri 8am–8pm · Sat 9am–5pm</span></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🌐</div>
+          <div class="contact-detail-text"><label>Virtual</label><span>Clients across all time zones welcome</span></div>
+        </div>
+      </div>
+      <div class="contact-socials">
+        <a class="social-btn" href="#" title="Instagram">📸</a>
+        <a class="social-btn" href="#" title="Facebook">💬</a>
+        <a class="social-btn" href="#" title="LinkedIn">💼</a>
+        <a class="social-btn" href="#" title="Twitter">🐦</a>
+      </div>
+    </div>
+    <div class="contact-form-wrap reveal-right">
+      <form id="contact-form">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane" required /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Doe" required /></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="jane@email.com" required /></div>
+        <div class="form-group"><label>Phone (Optional)</label><input type="tel" placeholder="+1 (555) 000-0000" /></div>
+        <div class="form-group">
+          <label>Service of Interest</label>
+          <select>
+            <option value="">Select a service...</option>
+            <option>Individual Therapy</option>
+            <option>Couples Counseling</option>
+            <option>Family Therapy</option>
+            <option>Anxiety & Stress Management</option>
+            <option>Trauma & PTSD</option>
+            <option>Mindfulness & Wellness</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Tell us a little about what brings you here today..."></textarea></div>
+        <button type="submit" class="form-submit">Send Message & Book Free Consultation →</button>
+      </form>
+      <div class="form-success" id="form-success">
+        <div class="checkmark">✓</div>
+        <h3>Message Received!</h3>
+        <p>Thank you for reaching out to Mind Monarch. We'll be in touch within one business day to confirm your free consultation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ FOOTER ██ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="32" height="32" viewBox="0 0 38 38" fill="none"><path d="M19 4L23.5 14L34 11L28 21L34 31L23.5 27L19 37L14.5 27L4 31L10 21L4 11L14.5 14Z" fill="#c9a84c" opacity=".85"/><circle cx="19" cy="21" r="5" fill="#1a3a2f"/><circle cx="19" cy="21" r="2.5" fill="#c9a84c"/></svg>
+          <span class="footer-logo-text">Mind <span>Monarch</span></span>
+        </div>
+        <p>Premium mental health counseling for those who believe their inner world deserves the very best care. Confidential. Evidence-based. Transformative.</p>
+        <div style="display:flex;gap:10px">
+          <a class="social-btn" href="#" style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);font-size:.85rem">📸</a>
+          <a class="social-btn" href="#" style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);font-size:.85rem">💬</a>
+          <a class="social-btn" href="#" style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);font-size:.85rem">💼</a>
+        </div>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Individual Therapy</a></li>
+          <li><a href="#services">Couples Counseling</a></li>
+          <li><a href="#services">Family Therapy</a></li>
+          <li><a href="#services">Anxiety & Stress</a></li>
+          <li><a href="#services">Trauma & PTSD</a></li>
+          <li><a href="#services">Mindfulness</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#about-home">About Us</a></li>
+          <li><a href="#packages">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:contactglanders@gmail.com">contactglanders@gmail.com</a></li>
+          <li><a href="#">+1 (800) MONARCH</a></li>
+          <li><a href="#">Virtual Sessions Available</a></li>
+          <li><a href="#">Mon–Sat, 8am–8pm</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 <span>Mind Monarch</span>. All rights reserved. Built with care for your journey.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">HIPAA Notice</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-top" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- FLOATING CONTACT -->
+<div class="float-contact">
+  <a class="float-btn float-wa" href="https://wa.me/1800666274" target="_blank" title="WhatsApp">💬</a>
+  <a class="float-btn float-mail" href="mailto:contactglanders@gmail.com" title="Email">✉️</a>
+</div>
+
+<script>
+/* ── LOADER ─────────────────────────── */
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('hidden'),900);
+});
+
+/* ── SCROLL PROGRESS ────────────────── */
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement;
+  const p=(s.scrollTop/(s.scrollHeight-s.clientHeight))*100;
+  document.getElementById('progress').style.width=p+'%';
+});
+
+/* ── NAV SCROLL ─────────────────────── */
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled',window.scrollY>60);
+  document.getElementById('back-top').classList.toggle('visible',window.scrollY>400);
+});
+
+/* ── HAMBURGER ──────────────────────── */
+const ham=document.getElementById('hamburger');
+const menu=document.getElementById('mobile-menu');
+const close=document.getElementById('close-menu');
+const mmLinks=document.querySelectorAll('.mm-link');
+ham.addEventListener('click',()=>{menu.style.display='flex';setTimeout(()=>menu.classList.add('open'),10)});
+const closeMenu=()=>{menu.classList.remove('open');setTimeout(()=>menu.style.display='none',400)};
+close.addEventListener('click',closeMenu);
+mmLinks.forEach(l=>l.addEventListener('click',closeMenu));
+
+/* ── INTERSECTION OBSERVER ──────────── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.12});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
+
+/* ── COUNTER ANIMATION ──────────────── */
+function animateCounter(id,target,duration){
+  const el=document.getElementById(id);
+  if(!el)return;
+  let start=0,step=target/duration*16;
+  const t=setInterval(()=>{start=Math.min(start+step,target);el.textContent=Math.round(start);if(start>=target)clearInterval(t)},16);
+}
+const heroObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    setTimeout(()=>{animateCounter('c1',850,1500);animateCounter('c2',97,1800);animateCounter('c3',12,1200)},1200);
+    heroObs.disconnect();
+  }
+},{threshold:.5});
+heroObs.observe(document.getElementById('home'));
+
+/* ── FAQ ACCORDION ──────────────────── */
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.parentElement;
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen)item.classList.add('open');
+  });
+});
+
+/* ── TESTIMONIALS CLONE ─────────────── */
+const track=document.getElementById('testi-track');
+if(track){
+  const clone=track.innerHTML;
+  track.innerHTML+=clone;
+}
+
+/* ── FORM SUBMIT ────────────────────── */
+document.getElementById('contact-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  this.style.display='none';
+  document.getElementById('form-success').style.display='block';
+  // mailto fallback
+  const name=this.querySelector('input[type=text]').value;
+  const email=this.querySelectorAll('input')[2].value;
+  const msg=this.querySelector('textarea').value;
+  window.location.href=`mailto:contactglanders@gmail.com?subject=New Consultation Request from ${encodeURIComponent(name)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`)}`;
+});
+
+/* ── SMOOTH SCROLL ──────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+</script>
+</body>
+</html>
